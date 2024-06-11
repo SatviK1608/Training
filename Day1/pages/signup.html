@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignUp</title>
+  </head>
+  <body>
+    <form action="/sign" method="post">
+      <input name="username" type="text" placeholder="Username" required />
+      <input name="email" type="email" placeholder="Email" required/>
+      <input name="phone" type="phone" placeholder="Phone No." required />
+      <input name="password" type="password" placeholder="Password" required/>
+      <button type="submit">SignUp</button>
+    </form>
+    <p>
+      Already have an account?<button onclick="window.location.href='/'">
+        LogIn
+      </button>
+    </p>
+  </body>
+</html>

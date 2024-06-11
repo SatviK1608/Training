@@ -1,0 +1,43 @@
+NODE JS- runtime env fpr js on the server
+
+why? - asynchronous(sends task to file sys ->ready to handle next req ->when file sys has opened and readt the file,server returns the content to client),single-threaded,non-blockingg
+
+Modules->a set of func (same as js libraries), giving relative path tells node that it's not built in module
+
+
+A nodejs code is wrapped inside a function
+(function (exports, require, module, __filename, __dirname) {
+  // module code here
+});
+
+
+
+HTTP Module 
+-(req.url can be used to fetch the endpoint,writeHead is used to set header)
+var http = require('http');
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write('Hello World!');
+  res.end();
+}).listen(8080);
+
+
+
+FS Module
+-The fs.readFile() method is used to read files on your computer.
+-The fs.appendFile() method appends specified content to a file. If the file does not exist, the file will be created
+-The fs.writeFile() method replaces the specified file and content if it exists. If the file does not exist, a new file, containing the specified content, will be created
+-The fs.rename() method renames the specified file
+
+
+Event Handelling
+- Node.js has a built-in module, called "Events", where you can create-, fire-, and listen for- your own events.
+- var events = require('events');
+  var eventEmitter = new events.EventEmitter();
+-To fire an event, use the emit() method.
+-eventEmitter.on(eventname,callback)
+-eventEmitter.emit(eventname)  
+
+
+express.urlenocded() is used to get data from the server if req is send using put or post method
+express.urlenocded({extended:true}) is used to accept all type of data (objects,nested object apart from strings and arrays)
