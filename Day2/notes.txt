@@ -1,0 +1,102 @@
+
+-----INTERNET-----
+1. mobile se data nearest tower pr phunchta hai packets ki form m
+2. tower convert kregaa electrical signals mein aur underground wires(optical fibres) k through transmit kregaa
+3. fir tower se packets convert honge destination pr phunchegaa
+
+
+
+
+------LAN-----
+1. mobile se data tower pr jayega fir ISP pr jayega voh
+2. fir ISP check krta hai ki whitelisted hai ke nhi agr hai to fir voh data us reciever ke nearest tower tk jayegaa aur fir use reciever pr bhej deta hai
+
+
+
+-------Router-------
+mobile se data wifi router pr jayega fir forward hoga 
+router k paas hmara mac address hota hai(local area network)
+aur us se connected device ko bhejdega
+pehle hackers mac address same rkh kr privacy breach krte the whatsapp ki jis s dono ko deliver hojata tha lekin ab end to end encryption agyii
+
+
+
+-----Server------
+a computer connected to internet and is programmed to recive request and respond over the internet can be called as server
+server provide services to other clients
+data ka copy banti hai fir voh copy serve hoti hai
+
+
+
+
+------------HTTP and HTTPS------------
+kisi website ko agr access krte hai to request router and all hoke us website ke servers tk jati hai aur fir vha se response serve hota hai
+ab is surfing ko krne ke liye protocol zroori hai uske bina nhi possible h
+to HTTP aur HTTPS ek protocol hai jis se hm data send kr ske aur mngwa skee
+yeh protocol ke andr set of rules hai jo follow krne pdhenge taki voh internet ko access kr ske
+farq yeh hai ki agr HTTP website hai to email password jo hm bhejre hai un packets ko hm pkd kr in dono ko pdh skte hai ek usb dongle ke throught(usm monitoring naam ka feature hota hai)
+jbki HTTPS website m data encrypted hota hai..agar packets recieve bhi krliye tb bhi voh unhe pdh nhi payega kyunki unhe decrypt krna pdhegaaa
+
+
+
+
+---------PORT---------
+kisi bhi server se connect hone ke liye PORTS hote hai
+open PORT aur close PORT hote hai and open PORT k through connection establish kr skte h
+4 se 5 digit ke no hote hai aur yeh gateway provide krte hai connect hone k liyee
+
+
+
+
+----------BACKEND---------
+server aur database ko programm krne wale ko backend dev kehte hai
+backend is necessary to make website more useful and purposefull for the auidence
+
+
+
+----INSTALL----
+jb hm install pr click krte hai to hmare laptop pr files copy hoti hai server se
+drive k andr files copy hoti hai and us files ka setup ko run krke install krne ko installation kehte hai
+
+
+----MIDDLEWARE----
+server pr req ane ke bad aur route pr response jane ke beech m jo ata hai use middleware kehte hai and usm hm koi bhi action perform kr skte haii
+hrr route se pehle middleware chlta hai
+agr middleware chljata hai to req jam hojati hai and route pr nhi ja paati isliye next() ka use krke hm req ko age forward krte haii
+
+
+
+
+----req, next and res------
+req m sara data hota hai client k taraf s aane wala aur res m controls hote h jinke basis p hum server s response bhej pate h
+next is just a push so that our req moves to next thing which should be executed
+
+
+
+
+-----Session and Cookies-----
+client m hooti hai cookies and server pr hota hai session
+jb hm data ko server pr save krana chahte h to hm session ka use krta hai
+jb data frontend/browser pr save krana hai to cookie ka use krte hai
+session jayda secure hai kyunki use user manipulate nhi kr sktaa
+server restart hone pr session delete hojata h
+
+->session
+const session=require("express-session")
+app.use(session({
+	resave:false,    //agr session m kuch naya save nhi hua hai to voh firse session ko bnakr save nhi krega is se fast hoga server
+	saveUninitialized:false, //uninitialized data ko baar baar save nhi krega is se memory bchegi
+	secret:"koibhikey"   //iski help s encrypted rhega data server pr
+}))
+req.session.key=value se hm session create krte hai
+req.session.destroy() se hm session ko destroy krte hai
+
+const cookie=require("cookie-parser)
+app.use(cookie())
+cookie frontend pr bnti hai to frontend pr bhejni hai to res object s bhejte h res.cookie(key,value)
+ab cookie ka data read krna hai to frontend se chahiye hoga to voh hm req object s access krenge req.cookies.key
+res.clearCookie() to clear the cookie
+
+
+
+
