@@ -98,24 +98,57 @@ const DetailUser = () => {
 
   return (
     <>
-      <p>
+      <div style={styles.container}>
         {user.map((item) => {
           return (
-            <>
-              <input
+            <div style={styles.userContainer}>
+              <input style={styles.input}
                 type="text"
                 value={item.user}
                 onChange={(e) => handleChange(e, item._id)}
               />
-              <button onClick={() => update(item._id)}>Update</button>
-              <button onClick={() => deleteUser(item._id)}>Delete</button>
+              <button onClick={() => update(item._id)} style={styles.button}>Update</button>
+              <button onClick={() => deleteUser(item._id)} style={styles.button}>Delete</button>
               <br />
-            </>
+            </div>
           );
         })}
-      </p>
+      </div>
     </>
   );
 };
+
+const styles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  userContainer: {
+    display: "flex",
+    alignItems: "center",
+    margin: "10px",
+  },
+  input: {
+    padding: "8px",
+    marginRight: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "14px",
+    outline: "none",
+  },
+  button: {
+    padding: "8px 12px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    fontSize: "14px",
+    cursor: "pointer",
+    outline: "none",
+  },
+};
+
+
 
 export default DetailUser;
