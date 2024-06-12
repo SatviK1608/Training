@@ -91,8 +91,8 @@ app.use(session({
 req.session.key=value se hm session create krte hai
 req.session.destroy() se hm session ko destroy krte hai
 
-const cookie=require("cookie-parser)
-app.use(cookie())
+const cookieParser=require("cookie-parser)
+app.use(cookieParser())
 cookie frontend pr bnti hai to frontend pr bhejni hai to res object s bhejte h res.cookie(key,value)
 ab cookie ka data read krna hai to frontend se chahiye hoga to voh hm req object s access krenge req.cookies.key
 res.clearCookie() to clear the cookie
