@@ -1,0 +1,110 @@
+
+---------COOOKIES----------
+HTTP is stateless so it would ask for your credentials for every personalized request.Thats the point where cookies comes into play
+cookies helps in state persistance
+cookies helps websites remember your
+first time server responds with page and add set-Cookie Header 
+So this cookie is sent with every subsequent request
+this cookie is know an identification of the client
+Cookies are broadly classified into two types
+    first-party cookies(needed for good web exp)
+    third-party cookies(needed for tracking purposes like running ads.)
+
+MDN
+1.A cookie (also known as a web cookie or browser cookie) is a small piece of data a server sends to a user's web browser. 
+The browser may store cookies, create new cookies, modify existing ones, and send them back to the same server with later requests. 
+Cookies enable web applications to store limited amounts of data and remember state information; by default the HTTP protocol is stateless.
+
+Typically, the server will use the contents of HTTP cookies to determine whether different requests come from the same browser/user and then 
+issue a personalized or generic response as appropriate.
+
+
+
+ The following describes a very simple user sign-in system:
+
+The user sends sign-in credentials to the server, for example via a form submission.
+If the credentials are correct, the server updates the UI to indicate that the user is signed in, and responds with a cookie containing a session ID that records their sign-in status on the browser.
+At a later time, the user moves to a different page on the same site. The browser sends the cookie containing the session ID along with the corresponding request to indicate that it still thinks the user is signed in.
+The server checks the session ID and, if it is still valid, sends the user a personalized version of the new page. If it is not valid, the session ID is deleted and the user is shown a generic version of the page (or perhaps shown an "access denied" message and asked to sign in again).
+
+
+
+
+
+
+
+
+--------------------SESSION----------------------
+Session is a piece of data which server keeps with itself to keep track of client
+On first request server will create a session
+The data sent id stored by the client such that it persists(cookies or localstorage)
+Now when client makes a request , server searches for the sessionid
+used to keep track wether user is logged in or not
+can be used for tracking
+
+
+
+
+Cookies
+1. cookie browser ke andr bnti hai
+2. user ko pehechanane m help krta hai
+3. remember me wale option ko click krne se session id store hojati h cookie m
+4. cookie ke and 4KB tk ka data store ho skta hai
+5. next time jb request jayegi to cookie header m attach hoke jayegi aur server identify krlega ki yeh vhi user hai
+6. cookie ko hum jb chahe expire kra skte hai
+
+
+Session
+1. jb pages ke beech m state manage krni hai to session ka use krna pdhegaa
+2. session server end pr bnta hai
+
+
+
+WebStorageAPI(Local Storage and Session Storage)
+1. browser ki storage hoti hai yeh
+2. 2MB se 10MB tk ka data store kra skte hai
+3. Jb tk browser khula rhega tb tk sessionStorage m data rhegaa lekin localStorage m aisa nhi h voh browser bnd hone ke baad bhi persist kregaa
+
+
+
+
+
+
+How Browser works
+1.  Browser has data persistant portion , interaction portion(UI), Browser engine(does magic).
+2.  Browser engine ha two parts : rendering and JS engine
+3.  Browser are capable of networking
+4.  We have timers in browser (setTimeout,setInterval ->these are borrowed from browser,not present in js)
+5.  The HTML tags are converted into NODELIST by Rendering engine(written in C++)
+6.  Browser loads the file and than display it to interact with them
+7.  When any browser loads file it sees raw data (raw bytes)
+8.  These raw bytes are converted into sequence of chars
+9.  Now a token is generated out of these seq of chars(picks out imp and necessary words)
+10. After tokenization,a structure is created i.e object is created and it has token which have info about each n every entity like which tag it is and what title it has and does it have any data/value and so on
+11. These objects are arranged with proper relation (somebody needs to be sibling,some needs to be parent) and this is how model is created
+12. These relations are than converted into nodes/nodelists by rendering engines and called DOM generation
+13. Now we have DOM ready with us
+14. CSS data is also present in raw byte and it is converted into seq of character and than token and then object and than the structure and than the relations and than a model is creataed(CSSOM)
+15. There is a render tree for browser which gathers info of DOM,CSSOM and are given to browser engine
+16. Browser engine now do calculations (like screen size,css styling sizes)
+17. Finally your painting starts (display of web page)
+18. The moment browser sees script tag it stops doing everything and preference goes to script(because they help in manipulation)
+19. So we want our html and css to repaint first,therefore we link js at end 
+20. If CSSOM is not loaded than JS execution will be halted until it's ready
+21. Deferring can be done to load the script at the very end even if its written first
+
+
+
+How database works
+1.  ORM/ODM (mongoose) interacts with client(mongoClient)
+2.  This client interacts with the database
+3.  And this database interacts with the disk for storing the data
+4.  The query written foremosts hits the Query Parsers and Query Optimisers
+5.  Query parser converts the char into AST(understandable tree structure(token->syntax->semanctic->tree))
+6.  This tree is passed to Query Optimiser to optimise the cost(time,execution speed, etc)
+7.  Now we have an Execution Engine(CEO) which decides how client request will come and how it will send it ASAP and therefor pushes the optimisers to do things faster.
+8.  We have Cache memory so the thing frequently asked should directly be brought from cache and not the disk everytime.
+9.  We have utility functions(authentications,backup,metrics).
+10. Now the data can magnatically engraved on the disk either by Data file or Index file form(meta data)
+11. Now the storage engine helps to store the data.
+12. Now we have managers like Recovery manager(uses simple DS(which is appendonly DS that you can only append you cannot delete .This what a blockchain is) to manage logs,which helps to rollback),Transaction manager(everything happens completely there is no partial state and transaction is guranteed ),Lock manager(if we want to write it gives exclusive excesss to that sepecific portion and no one can interfere it(means cannot write,update,delete on it, can only read))
