@@ -53,7 +53,9 @@ app.post("/login", (req, res,next) => {
 });
 
 app.get("/home",(req,res)=>{
-    res.sendFile(path.join(__dirname, "pages", "dashboard.html"));
+  if(req.session.username)
+    return res.sendFile(path.join(__dirname, "pages", "dashboard.html"));
+  res.redirect("/")
 })
 app.get("/logout",(req,res)=>{
     req.session.destroy();
