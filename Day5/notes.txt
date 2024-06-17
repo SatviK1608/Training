@@ -1,0 +1,101 @@
+
+------------MIDDLEWARES-------------
+    Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function 
+    in the application’s request-response cycle.
+
+    Types->Applicaation-level,Router-level,Built-in,Third-party,Error-Handelling
+
+1. Middleware functions usually have 3 standard params req, res, and next. 
+    The first two are objects, the last is a function that will call the next middleware function, if there is one.
+2. Usually there is a middleware chain, meaning a chain of functions that are called one after the other, with the last function sending the response back to the browser. 
+    So we get the request from the browser, make any modifications and data additions, and then send a response back.
+3. You must call next() (unless it’s the last function in the chain) or the request will just hang and eventually timeout. 
+    In the browser this will manifest as a really long spinner before a message of “connection timed out” or similar.
+4. Any changes you make to req or res will be available in the next middleware function.
+5. req and res are unique for each request. Meaning that a user from USA result in a different req object than a user from a European country.
+
+
+
+
+
+
+------------MULTER------------
+
+Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+NOTE: Multer will not process any form which is not multipart (multipart/form-data).
+
+
+
+.single(fieldname)
+Accept a single file with the name fieldname. The single file will be stored in req.file.
+
+.array(fieldname[, maxCount])
+Accept an array of files, all with the name fieldname. Optionally error out if more than maxCount files are uploaded. The array of files will be stored in req.files.
+
+.fields(fields)
+Accept a mix of files, specified by fields. An object with arrays of files will be stored in req.files.
+
+fields should be an array of objects with name and optionally a maxCount. Example:
+
+[
+  { name: 'avatar', maxCount: 1 },
+  { name: 'gallery', maxCount: 8 }
+]
+.none()
+Accept only text fields. If any file upload is made, error with code "LIMIT_UNEXPECTED_FILE" will be issued.
+
+.any()
+Accepts all files that comes over the wire. An array of files will be stored in req.files.
+
+
+
+DiskStorage
+The disk storage engine gives you full control on storing files to disk.
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/tmp/my-uploads')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage })
+There are two options available, destination and filename. They are both functions that determine where the file should be stored.
+
+destination is used to determine within which folder the uploaded files should be stored. This can also be given as a string (e.g. '/tmp/uploads'). If no destination is given, the operating system's default directory for temporary files is used.
+
+Note: You are responsible for creating the directory when providing destination as a function. When passing a string, multer will make sure that the directory is created for you.
+
+filename is used to determine what the file should be named inside the folder. If no filename is given, each file will be given a random name that doesn't include any file extension.
+
+Note: Multer will not append any file extension for you, your function should return a filename complete with an file extension.
+
+Each function gets passed both the request (req) and some information about the file (file) to aid with the decision.
+
+
+
+
+
+
+
+
+
+----------------------How NodeJS works-------------------------
+server has various ports and we must have one port for listening, for http default port is 80
+node js doesnt have access to network/interface card(a core computer thing)
+so we have libuv library(majorly in C) which helps in interacting with the networking (computer aur NODEJS k bneech m)
+the request is streams / bytes of data and to have access it we use http library as it converts it into strings
+when request comes the libuv library will convert it into request and response objects
+request have various properties(majorly) and response have various methods(majorly)
+in response first status is sent, than the json and than the end()
+libuv determines from the properties of request, that somebody is requesting the particular URL and it emits the event and than NODEJS looks into it, executes and keeps it in memory
+nodejs injects request and response objects in every request
+NUTSHELL :  a request comes in bytes->converts into string by livuv->crafts an object out of it->insert req and res objects -> emits event for route ->nodejs looks for equivalent fun and add the req and res objects -> streams this response back to libuv->libuv transmits it back to the user 
+
+
+
+
+
