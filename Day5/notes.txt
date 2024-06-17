@@ -99,3 +99,63 @@ NUTSHELL :  a request comes in bytes->converts into string by livuv->crafts an o
 
 
 
+-------------------CORS------------------------
+
+
+CORS (Cross-Origin Resource Sharing) is a security feature implemented by web browsers that restricts web pages from making requests to a different domain 
+than the one that served the original web page. This restriction exists primarily for security reasons, 
+as it helps prevent malicious scripts from being able to make unauthorized requests to other websites on behalf of a user.
+
+
+Why we need CORS:
+Security: CORS prevents unauthorized access to resources by enforcing restrictions on cross-origin requests.
+
+Privacy: It helps protect user data by ensuring that sensitive information can only be accessed from trusted sources.
+
+Control: Website owners can control which origins are allowed to access their resources, thereby ensuring that their servers are not abused by malicious actors.
+
+
+Using CORS in Node.js:
+When developing a Node.js application that serves HTTP resources and needs to handle CORS, you typically have a few options to integrate CORS support:
+
+Using cors Middleware:
+
+npm install cors
+const express = require('express');
+const cors = require('cors');
+const app = express();
+// Enable CORS for all origins
+app.use(cors());
+
+
+
+Custom configuration:
+Example: Configure CORS to allow only a specific origin
+const corsOptions = {
+  origin: 'https://example.com',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
+
+
+
+
+
+
+Using CORS for multiple domains:
+const express = require('express');
+const cors = require('cors');
+const app = express();
+// Define an array of allowed origins
+const allowedOrigins = ['http://example1.com', 'https://example2.com'];
+// Configure CORS options
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: ['GET', 'POST'], // Specify which methods are allowed
+  allowedHeaders: ['Content-Type', 'Authorization'], // Specify which headers are allowed
+};
+// Enable CORS with the configured options
+app.use(cors(corsOptions));
+
+
+
