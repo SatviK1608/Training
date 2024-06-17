@@ -1,0 +1,181 @@
+Relational Databases
+A relational database is a type of database that stores and provides access to data points that are related to one another. 
+It organizes data into one or more tables (or relations), where each table consists of rows (tuples) and columns (attributes or fields). 
+This structure allows for efficient querying, indexing, and managing of data.
+
+
+
+Key Concepts in Relational Databases:
+
+Tables:
+Also known as relations, tables are the basic structure used to hold data in a relational database. 
+Each table typically represents one entity type (e.g., customers, orders, products).
+
+
+Rows (Tuples):
+Each row in a table represents a single record or data point within that entity. 
+For example, in a table of "Customers," each row would represent one customer.
+
+
+Columns (Attributes):
+Columns define the characteristics or attributes of the data that are stored in each row. 
+Each column has a name and a data type (e.g., integer, string, date).
+
+
+Keys:
+Primary Key: A unique identifier for each row in a table, used to ensure each row can be uniquely identified. 
+It typically consists of one or more columns that uniquely identify a record.
+Foreign Key: A field in one table that refers to the primary key in another table. 
+It establishes a link between the two tables, representing a relationship between them.
+
+
+Relationships:
+Relationships define how tables are connected to each other. 
+The primary mechanism for establishing relationships is through foreign keys. 
+Common types of relationships include one-to-one, one-to-many, and many-to-many.
+
+
+Normalization:
+Normalization is the process of organizing data in a database to minimize redundancy and dependency. 
+This involves dividing large tables into smaller tables and defining relationships between them.
+
+
+SQL (Structured Query Language):
+SQL is the standard language used to communicate with and manipulate relational databases. 
+It allows users to create, retrieve, update, and delete data from the database.
+
+
+Advantages of Relational Databases:
+Structured Approach: Data is organized into structured tables, making it easy to understand and use.
+Flexibility: Supports complex queries and relationships between entities.
+Integrity: Ensures data integrity through constraints such as primary keys and foreign keys.
+Security: Provides access control mechanisms to protect data.
+Scalability: Can handle large volumes of data and support multiple users.
+
+
+Examples of Relational Database Systems:
+    MySQL: An open-source relational database management system (RDBMS).
+    PostgreSQL: Another popular open-source RDBMS known for its extensibility and SQL compliance.
+    Oracle Database: A commercial RDBMS known for its robustness and scalability.
+    SQL Server: Microsoft's RDBMS offering, widely used in enterprise environments.
+
+
+In summary, 
+relational databases provide a structured way to store and manage data, enabling efficient querying and ensuring data integrity through 
+defined relationships. They form the backbone of many applications and systems where data organization and relational querying are essential.
+
+
+
+-------------------------SQL COMMANDS-----------------------------
+
+Database:
+To create db: create database uniqueDbName;
+To use db: use uniqueDbName;
+To drop db: drop database uniqueDbName;
+
+Tables:
+To create table: create table uniqueTableName (col1 dataType,col2 dataType,...);
+To rename: rename table oldName to newName;
+To drop table: drop table uniqueTableName;
+To add col: alter table uniqueTableName add col1 dataType;
+To rename col:alter table uniqueTableName rename column oldName to newName;
+To modify datatype:alter table uniqueTableName modify column name newDataType; 
+To move cols around:alter table name modify col dataType after col2;
+To move col to the first: alter table name modify col dataType first;
+To drop col:alter table name drop column col;
+
+
+Insert Rows:
+To insert single row: insert into uniqueTableName (col1,col2,...) values (val1,val2,...);
+To insert multiple rows: insert into uniqueTableName (col1,col2,...) values (val1,val2,...),(val1,val2,...) ;
+
+
+Select Rows:
+To select every col: select * from uniqueTableName;
+To select specific col: select col1,col2,... from uniqueTableName;
+To select col with specific criteria: select * from uniqueTableName where columnName Condition Value;
+To check for NULL value: select * from uniqueTableName where col1 is null;
+To check for NOT NULL value: select * from uniqueTableName where col1 is not null;
+
+
+Update and Delete:
+To update single col value:update uniqueTableName set col1=val where col comdition filterValue;
+To update multiple col values:update uniqueTableName set col1=val,col2=val2 where col comdition filterValue;
+To update a colunm of every row with same value: update uniqueTableName set col1=val;
+To delete all rows : delete from uniqueTableName;
+To delete rows with specific criteria: delete from uniqueTableName where col condition fliterValue;
+
+Commit and Rollback:
+To turn off auto commit : set auto_commit = off;
+To rollback to prev savepoint: rollback;
+To commit changes: commit;
+
+Primary Key:
+To make a col as pk at declaration time:create table uniqueTableName (col1 dataType primary key,col2 dataType,...);
+To make a col as pk after declaration:alter table uniqueTableName add constraint primary key(col1);
+
+Auto Increment:
+To increment col value of new row (starts with 1): create table uniqueTableName (col1 dataType auto_increment,col2 dataType,...);
+To change start value of auto increment: alter table uniqueTableName set auto_increment=startValue
+
+Foreign Key:
+To add fk at time of creation : create table uniqueTableName (col1 dataType1,col2 dataType2,...,foreign key(col) references otherTableName(otherTableCol));
+To drop fk: alter table uniqueTableName drop foreign key fkColName;
+To add fk after table creation: alter table uniqueTableName add constraint uniqueConstraintName foreign key(fkColName) references otherTableName(otherTableCol);
+
+
+Joins:
+To inner join two tables: select * from table1 inner join table2 on table1.fkCol = table2.pkCol;
+To left join two tables: select * from table1 left join table2 on table1.fkCol = table2.pkCol;
+To right join two tables: select * from table1 right join table2 on table1.fkCol = table2.pkCol;
+
+
+Function:
+To count: select count(colName) from uniqueTableName;
+To find max value: select max(colName) from uniqueTableName;
+To find min value: select min(colName) from uniqueTableName;
+To find sum : select sum(colName) from uniqueTableName;
+To find avg : select avg(colName) from uniqueTableName;
+To concatenate result of two col: select concat (col1," ",col2) as aliasName from uniqueTableName;
+
+
+Wildcards:
+to skip multiple char : select * from uniqueTableName where col like "s%";
+to skip one char : select * from uniqueTableName where col like "s_";
+
+
+Order by:
+To sort in ascending order: select * from uniqueTableName order by colName asc;
+To sort in descending order: select * from uniqueTableName order by colName desc;
+
+
+Limit:
+To limit the number of rows: select * from uniqueTableName limit rowLimit;
+To get records of a range : select * from uniqueTableName limit offsetValue,rowLimit;
+
+
+Unions:
+To combine results of select statements : select * from uniqueTableName union select * from otherTableCol;
+To allow duplicates in union : select * from uniqueTableName union all select * from otherTableCol;
+
+
+Views:
+To create view: create view viewName as select col1,col2,.. from uniqueTableName;
+To drop view: drop view viewName;
+
+Indexes:
+To view indexes : show indexes from uniqueTableName;
+To create index : create index indexName on uniqueTableName(col);
+To drop index : alter table uniqueTableName drop index indexName;
+
+
+Group By:
+Select sum(col1),col2 from uniqueTableName group by col2;
+To apply filters: Select sum(col1),col2 from uniqueTableName group by col2 having sum(col1) condition filterValue;
+
+
+On delete:
+when fk is deleted,replace fk with null : create table uniqueTableName (col1 dataType1,col2 dataType2,...,foreign key(col) references otherTableName(otherTableCol) on delete set null);
+when fk is deleted,replace fk with null : alter table uniqueTableName add constraint fkName foreign key (col1) references tableName(col2) on delete set null;
+when fk is deleted, delete row : create table uniqueTableName (col1 dataType1,col2 dataType2,...,foreign key(col) references otherTableName(otherTableCol) on delete cascade);
+when fk is deleted, delete row : alter table uniqueTableName add constraint fkName foreign key (col1) references tableName(col2) on delete cascade;

@@ -130,6 +130,7 @@ app.use(cors());
 
 
 Custom configuration:
+
 Example: Configure CORS to allow only a specific origin
 const corsOptions = {
   origin: 'https://example.com',
@@ -143,6 +144,7 @@ app.use(cors(corsOptions));
 
 
 Using CORS for multiple domains:
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -159,3 +161,20 @@ app.use(cors(corsOptions));
 
 
 
+Enabling preflight 'OPTIONS' :
+
+Handling preflight OPTIONS requests is crucial when you're specifying custom HTTP methods or headers in your CORS (Cross-Origin Resource Sharing) configuration. 
+These preflight requests are automatically sent by browsers as part of the CORS protocol to determine whether the actual request is safe to send to the server.
+
+app.use(cors({
+  origin: '*', // Allow all origins (replace with specific origins as needed)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+}));
+// Route example with custom HTTP method and headers
+app.put('/api/data', (req, res) => {
+  // Handle PUT request
+  res.json({ message: 'Data updated successfully' });
+});
+// Handle preflight OPTIONS requests
+app.options('/api/data', cors()); // Enable preflight request for /api/data route
