@@ -178,3 +178,4 @@ app.put('/api/data', (req, res) => {
 });
 // Handle preflight OPTIONS requests
 app.options('/api/data', cors()); // Enable preflight request for /api/data route
+
