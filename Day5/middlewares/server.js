@@ -11,7 +11,7 @@ const ACCESS_TOKEN_SECRET='caa8bf8c1cadf12bb7e73d5fed78a9d2e5071ec36e9ad74fa375f
 
 const port = 5000;
 
-
+app.use(express.json())
 app.use(express.urlencoded())
 app.use(cookieParser())
 
@@ -39,6 +39,7 @@ app.get("/", async (req, res) => {
 
 app.post("/login", (req, res) => {
     const {username,password}=req.body;
+    console.log(username,password)
     let data=JSON.parse(fs.readFileSync('./users.txt','utf-8'));
     console.log(data)
     data.map((item)=>{
