@@ -1,0 +1,135 @@
+--------------Pooling----------------
+In PostgreSQL, "pooling" generally refers to connection pooling, which is a technique used to efficiently manage database connections. 
+Here's what it means in more detail:
+
+Connection Pooling:
+
+Definition: Connection pooling is a method where a pool of database connections is created and maintained, 
+allowing multiple clients (applications or processes) to share a smaller number of database connections.
+
+Purpose: The primary goal of connection pooling is to reduce the overhead associated with establishing and tearing down database connections.
+Establishing a new database connection can be a relatively expensive operation in terms of time and resources.
+By reusing existing connections from the pool, applications can avoid the overhead of creating new connections each time they need to interact 
+with the database.
+
+How it works: When an application needs to execute a query or perform any database operation, it requests a connection from the pool. 
+If an idle (unused) connection is available in the pool, it is returned to the application. If no idle connection is available, 
+a new one may be created (up to a maximum configured limit) unless the pool is configured to wait for a connection to become available.
+
+
+Benefits:
+Performance: Reduced overhead of connection establishment and teardown leads to faster response times.
+Resource management: Limits the number of simultaneous database connections, preventing overload and contention.
+Scalability: Allows applications to scale more efficiently by reusing connections and managing them effectively.
+
+
+
+-------------------Sequelize---------------
+https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+
+
+Sequelize is an Object-Relational Mapping (ORM) library for Node.js that provides easy access to relational databases such as PostgreSQL, 
+MySQL, SQLite, and MSSQL. 
+
+What is an ORM?
+Object-Relational Mapping (ORM) is a technique that allows developers to work with relational databases using an object-oriented approach. 
+Instead of writing raw SQL queries, developers interact with database tables through JavaScript objects and methods provided by the ORM library.
+
+
+Sequelize ORM Features:
+Model Definition:Sequelize allows you to define models that represent tables in your database. 
+Each model defines attributes (columns) and their data types, relationships with other models, and various options such as table name and timestamps.
+
+CRUD Operations:Sequelize provides methods to create, read, update, and delete records (CRUD operations) from the database using JavaScript syntax. 
+For example, Model.create(), Model.findAll(), Model.update(), Model.destroy().
+
+Associations:Sequelize supports defining associations between models, such as one-to-one, one-to-many, and many-to-many relationships. 
+These associations are defined using methods like belongsTo, hasMany, belongsToMany, etc.
+
+Transactions:Transactions are supported by Sequelize, allowing you to perform multiple database operations as a single unit. 
+This ensures data consistency and integrity.
+
+Query Building:Allows you to write custom queries using its query language (operators and methods) if needed.
+
+Validation:Sequelize provides built-in validation mechanisms for model attributes. 
+You can define validations such as required fields, data types, length constraints, and custom validations.
+
+Hooks:Sequelize supports lifecycle hooks (beforeCreate, beforeUpdate, afterCreate, etc.) that allow you to execute 
+custom logic before or after certain actions on models.
+
+Migrations:Sequelize includes a migration system that helps manage changes to your database schema over time. 
+Migrations allow you to version-control your database structure and apply changes in a consistent manner.
+
+Connection:
+const { Sequelize, DataTypes } = require('sequelize');
+// Initialize Sequelize with PostgreSQL credentials
+const sequelize = new Sequelize('postgres://postgres:123@localhost:5432/postgres');
+// Define User model
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  }
+});
+// Sync the model with the database (ensure the table exists)
+sequelize.sync()
+  .then(() => {
+    console.log('PostgreSQL database synced');
+  })
+  .catch(err => {
+    console.error('Error syncing PostgreSQL database:', err);
+  });
+
+
+CRUD:
+// Get all users
+app.get("/getUsers", async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.json({ data: users });
+  } catch (err) {
+    console.error("Error fetching users:", err);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
+});
+
+// Add a new user
+app.post("/addUser", async (req, res) => {
+  const { username, id } = req.body;
+  try {
+    const newUser = await User.create({ username, id });
+    res.json({ data: newUser });
+  } catch (err) {
+    console.error("Error creating user:", err);
+    res.status(500).json({ error: 'Error creating user' });
+  }
+});
+
+// Update a user
+app.put("/updateUser", async (req, res) => {
+  const { id, username } = req.body;
+  try {
+    const [numRowsUpdated] = await User.update({ username }, { where: { id } });
+    res.json({ data: numRowsUpdated });
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ error: 'Error updating user' });
+  }
+});
+
+// Delete a user
+app.delete("/deleteUser", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const numRowsDeleted = await User.destroy({ where: { id } });
+    res.json({ data: numRowsDeleted });
+  } catch (err) {
+    console.error("Error deleting user:", err);
+    res.status(500).json({ error: 'Error deleting user' });
+  }
+});
