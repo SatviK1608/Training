@@ -114,7 +114,7 @@ let customer, product;
 //     return Customer.findAll();
 // }).then((data)=>{
 //     customer=data;
-//     product.addCustomers(customer);  //WittCode becomes owner of all products
+//     product.addCustomers(customer);  //laptop becomes product of all user
 // }).catch((err)=>{
 //     console.error('Error syncing PostgreSQL database:', err);
 // })
