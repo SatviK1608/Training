@@ -1,0 +1,28 @@
+const User=require("../models/UserModel")
+const Section=require("../models/SectionModel")
+const Qualification=require("../models/QualificationsModel")
+const UserQualification=require("../models/UserQualificationModel");
+
+const getSections =async (req,res,next)=>{
+    res.json({data:"test"})
+}
+
+const addSection=async (req,res,next)=>{
+    res.json({data:"test"})
+}
+
+const deleteSection=async (req,res,next)=>{
+    res.json({data:"test"})
+}
+
+const viewSectionUsers=async (req,res,next)=>{
+    res.json({data:"test"})
+}
+
+const updateSection=async (req,res,next)=>{
+    res.json({data:"test"})
+}
+
+
+module.exports={getSections,addSection,deleteSection,viewSectionUsers,updateSection};
+
