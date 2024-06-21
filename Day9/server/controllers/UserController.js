@@ -34,9 +34,14 @@ const deleteUser=async (req,res,next)=>{
 
 const getProfile=async (req,res,next)=>{
     const result=await User.findOne({where:{id:req.body.id}})
-    const section=Section.getUsers(result)
-    const qualifications=Qualification.getUsers(result);
-    res.json({data:result})
+    let section=await result.getSection();
+    let qualification=await result.getQualifications()
+    qualification=qualification.map((item)=>{
+        return item.qualificationname
+    })
+    section=section.name
+    const data={result,section,qualification}
+    res.json({data:data})
 }
 
 const updateProfile=async (req,res,next)=>{
