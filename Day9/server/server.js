@@ -7,7 +7,13 @@ const Qualification=require("./models/QualificationsModel")
 const UserQualification=require("./models/UserQualificationModel");
 const UserRoute=require("./routes/UserRoutes");
 const SectionRoute=require("./routes/SectionRoutes");
+const cors=require("cors")
 
+
+
+
+
+app.use(cors());
 app.use(express.json())
 
 app.use("/user",UserRoute);

@@ -10,15 +10,18 @@ const getUsers =async (req,res,next)=>{
 
 const addUser=async (req,res,next)=>{
 
-    const {name,email,address,paymentMethod,profilePic,section,qualifications}=req.body;
-    
-    console.log(typeof(address),paymentMethod)
-    const result=await User.create({name:name,email:email,profilePic:profilePic,addresses:address,paymentMethods:paymentMethod});
+    let {name,email,address,paymentMethod,profileImage,section,qualifications}=req.body;
+    address=JSON.parse(address)
+    paymentMethod=JSON.parse(paymentMethod)
+    qualifications=JSON.parse(qualifications)
+    console.log(paymentMethod);
+    const imageUrl = req.file.path; // Cloudinary URL is in req.file.path
+    console.log(imageUrl)
+    const result=await User.create({name:name,email:email,profilePic:imageUrl,addresses:address,paymentMethods:paymentMethod});
     const sectionname=await Section.findOne({where:{name:section}});
     const qualificationsname=await Qualification.findAll({where:{qualificationname:qualifications}})
     //console.log(sectionname,qualificationsname);
     
-    console.log(result)
 
     sectionname.addUsers(result)
     result.addQualifications(qualificationsname)
@@ -47,11 +50,16 @@ const getProfile=async (req,res,next)=>{
 const updateProfile=async (req,res,next)=>{
     
     
-    const {id,name,email,address,paymentMethod,profilePic,section,qualifications}=req.body;
+    const {id,name,email,address,paymentMethod,profileImage,section,qualifications}=req.body;
+    address=JSON.parse(address)
+    paymentMethod=JSON.parse(paymentMethod)
+    qualifications=JSON.parse(qualifications)
+    console.log(paymentMethod);
+    const imageUrl = req.file.path; 
     const find=await User.findOne({id:id})
     const oldqualification=await find.getQualifications();
     await find.removeQualifications(oldqualification)
-    const result=await User.update({name:name,email:email,profilePic:profilePic,addresses:address,paymentMethods:paymentMethod},{where:{id:id}})
+    const result=await User.update({name:name,email:email,profilePic:imageUrl,addresses:address,paymentMethods:paymentMethod},{where:{id:id}})
     const sections=await Section.findOne({where:{name:section}})
     const qualification=await Qualification.findAll({where:{qualificationname:qualifications}})
     sections.addUsers(find)
