@@ -9,7 +9,7 @@ Qualification.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  qualificationName: {
+  qualificationname: {
     type: DataTypes.STRING,
     allowNull: false,
   },

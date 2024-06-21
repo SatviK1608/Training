@@ -8,6 +8,7 @@ const UserQualification=require("./models/UserQualificationModel");
 const UserRoute=require("./routes/UserRoutes");
 const SectionRoute=require("./routes/SectionRoutes");
 
+app.use(express.json())
 
 app.use("/user",UserRoute);
 app.use("/section",SectionRoute);

@@ -9,7 +9,7 @@ const getSections =async (req,res,next)=>{
 }
 
 const addSection=async (req,res,next)=>{
-    const result=await Section.create({})
+    const result=await Section.create({name:req.body.name})
     res.json({data:"test"})
 }
 
@@ -19,13 +19,13 @@ const deleteSection=async (req,res,next)=>{
 }
 
 const viewSectionUsers=async (req,res,next)=>{
-    const result=await Section.findOne({where:{name:req.body.id}})
-    const users=await result.getUser();
+    const result=await Section.findOne({where:{id:req.body.id}})
+    const users=await result.getUsers();
     res.json({data:users})
 }
 
 const updateSection=async (req,res,next)=>{
-    const result=await Section.update({},{where:{id:req.body.id}})
+    const result=await Section.update({name:req.body.name},{where:{id:req.body.id}})
     res.json({data:result})
 }
 
