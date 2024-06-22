@@ -20,7 +20,7 @@ app.use("/user",UserRoute);
 app.use("/section",SectionRoute);
 
 User.belongsTo(Section);
-Section.hasMany(User); 
+Section.hasMany(User,{onDelete:"SET NULL"}); 
 
 User.belongsToMany(Qualification, { through: UserQualification });
 Qualification.belongsToMany(User, { through: UserQualification });
@@ -33,6 +33,7 @@ sequelize.sync()
   .catch(err => {
     console.error('Error syncing PostgreSQL database:', err);
 });
+
 
 app.listen(5000,()=>{
     console.log(`Connected to http://localhost:5000`);
