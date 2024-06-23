@@ -17,6 +17,7 @@ export default function Sections() {
   const navigate = useNavigate();
   const [sections, setSections] = useState([]);
   const { sectionId, setSectionId } = useContext(UpdateContext);
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/section/getSections")
@@ -27,41 +28,43 @@ export default function Sections() {
         console.log(e);
       });
   }, []);
+
   const handleViewSection = (section) => {
     setSectionId(section.id);
     navigate("/view-section");
   };
+
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 3,
-        flexWrap: "flex-wrap",
-      }}
-      marginTop={3}
-      maxWidth={900}
+    sx={{
+      display: "flex",
+      flexDirection: "row",
+      gap: 3,
+      flexWrap: "wrap",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 3,
+      maxWidth: 1200,
+      mx: "auto",
+    }}
+     
     >
       {sections.map((section) => (
         <Card
           key={section.id}
-          sx={{ minWidth: 275, boxShadow: 3, borderRadius: 2, padding: 2 }}
+          sx={{ minWidth: 275, maxWidth: 600, boxShadow: 4, borderRadius: 2, padding: 2, backgroundColor: "#f5f5f5" }}
         >
           <CardContent>
             <Typography variant="h5" component="div" gutterBottom>
               {section.name}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              gutterBottom
-            ></Typography>
-            <Divider sx={{ marginY: 1 }} />
+            <Divider sx={{ marginY: 2 }} />
           </CardContent>
           <CardActions sx={{ justifyContent: "flex-end" }}>
             <Button
               startIcon={<Visibility />}
               variant="outlined"
+              sx={{ color: "#616161", borderColor: "#bdbdbd", mr: 1 }}
               onClick={() => {
                 handleViewSection(section);
               }}
@@ -71,7 +74,7 @@ export default function Sections() {
             <Button
               startIcon={<Edit />}
               variant="outlined"
-              color="primary"
+              sx={{ color: "#616161", borderColor: "#bdbdbd" }}
               onClick={() => {}}
             >
               EDIT

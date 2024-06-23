@@ -1,42 +1,33 @@
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: center;
+  background-color: #f5f5f5; /* Light grey background */
+  color: #333; /* Dark grey text */
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  color: #444; /* Slightly darker grey for the heading */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button {
+  margin: 5px; /* Ensure there is some margin around buttons */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+button.MuiButton-contained {
+  background-color: #4caf50; /* Green background for contained buttons */
+  color: #fff; /* White text */
 }
 
-.App-link {
-  color: #61dafb;
+button.MuiButton-outlined {
+  border-color: #2196f3; /* Blue border for outlined buttons */
+  color: #2196f3; /* Blue text */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button.MuiButton-outlined:hover {
+  background-color: rgba(33, 150, 243, 0.04); /* Light blue background on hover for outlined buttons */
+}
+
+button.MuiButton-contained:hover {
+  background-color: #388e3c; /* Darker green on hover for contained buttons */
 }

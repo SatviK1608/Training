@@ -11,22 +11,24 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { UpdateContext } from "../../updateContext";
+
 const root = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  "& .MuiTextField-root": { m: 1, width: "50ch" },
-  borderRadius: "5px",
-  padding: "50px",
-  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  "& .MuiTextField-root": { m: 1, width: "60ch" },
+  borderRadius: "10px",
+  padding: "40px",
+  backgroundColor: "#f9f9f9",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
 };
 
 const alertStyles = {
-  border: "2px solid #0096FF",
+  border: "2px solid #4caf50",
   borderRadius: "5px",
-  backgroundColor: "lightBlue",
-  padding: "5px",
+  backgroundColor: "#d0f0c0",
+  padding: "10px",
 };
 
 const qualificationsOptions = [
@@ -41,6 +43,16 @@ const qualificationsOptions = [
   "Doctor of Education",
   "Bachelor of Laws",
 ];
+
+const sectionOptions = ["A1", 
+  "A2", 
+  "B1", 
+  "B2", 
+  "C2", 
+  "D1",
+   "D2",
+    "E1", 
+    "E2"];
 
 const UserForm = () => {
   const { update, id } = useContext(UpdateContext);
@@ -63,7 +75,6 @@ const UserForm = () => {
         .post("http://localhost:5000/user/getProfile", { id })
         .then((res) => {
           const data = res.data.data;
-          console.log(data, "view");
           var qualifications = data.qualification;
           const section = data.section;
           const addresses = data.result.addresses.map((item) => {
@@ -79,14 +90,6 @@ const UserForm = () => {
             addresses: addresses,
             paymentMethod: data.result.paymentMethods[0],
           });
-          // Ensure addresses and qualifications have at least one entry
-          // if (data.addresses.length === 0) {
-          //   data.addresses = [{ value: "" }];
-          // }
-          // if (data.qualifications.length === 0) {
-          //   data.qualifications = [{ value: "" }];
-          // }
-          // setFormData(data);
         })
         .catch((e) => {
           console.log(e);
@@ -103,7 +106,6 @@ const UserForm = () => {
   };
 
   const handleImageChange = (e) => {
-    console.log(e.target.files[0])
     setFormData({
       ...formData,
       profileImage: e.target.files[0],
@@ -203,22 +205,21 @@ const UserForm = () => {
         qualifications: formData.qualifications.map((item) => {
           return item.value;
         }),
-        profileImage:formData.profileImage,
+        profileImage: formData.profileImage,
       };
-      // setFormData(newData);
       axios
-        .put("http://localhost:5000/user/updateProfile", newData,{headers: {
-          "Content-Type": "multipart/form-data",
-        }})
+        .put("http://localhost:5000/user/updateProfile", newData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
-          console.log(newData,"new");
           setAlert(true);
           setTimeout(() => {
             setAlert(false);
           }, 3000);
         })
         .catch((e) => {
-          console.log(e);
           setError(true);
           setTimeout(() => {
             setError(false);
@@ -226,11 +227,11 @@ const UserForm = () => {
         });
     } else {
       axios
-        .post("http://localhost:5000/user/addUser", formData,
-          {headers: {
+        .post("http://localhost:5000/user/addUser", formData, {
+          headers: {
             "Content-Type": "multipart/form-data",
-          }}
-        )
+          },
+        })
         .then((res) => {
           setAlert(true);
           setTimeout(() => {
@@ -259,8 +260,8 @@ const UserForm = () => {
         <p
           style={{
             ...alertStyles,
-            backgroundColor: "#FF8488",
-            border: "1px solid #FF474D",
+            backgroundColor: "#ffebee",
+            border: "2px solid #f44336",
           }}
         >
           An error occurred while adding user!
@@ -291,6 +292,32 @@ const UserForm = () => {
         value={formData.email}
         onChange={handleChange}
       />
+      <FormControl sx={{ m: 1, minWidth: 430 }}>
+        <InputLabel>Payment Method</InputLabel>
+        <Select
+          value={formData.paymentMethod}
+          label="Payment Method"
+          name="paymentMethod"
+          onChange={handleChange}
+        >
+          <MenuItem value={"Credit Card"}>Credit Card</MenuItem>
+          <MenuItem value={"Debit Card"}>Debit Card</MenuItem>
+          <MenuItem value={"PayPal"}>PayPal</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ m: 1, minWidth: 430 }}>
+        <InputLabel>Section </InputLabel>
+        <Select
+          value={formData.section}
+          label="Section"
+          name="section"
+          onChange={handleChange}
+        >
+          {sectionOptions.map((item) => {
+            return <MenuItem value={item}>{item}</MenuItem>;
+          })}
+        </Select>
+      </FormControl>
       {formData.addresses.map((address, index) => (
         <div key={`address-${index}`} style={{ maxWidth: "90%" }}>
           <TextField
@@ -317,26 +344,6 @@ const UserForm = () => {
           Add Address
         </Button>
       )}
-      <FormControl sx={{ m: 1, minWidth: 430 }}>
-        <InputLabel>Payment Method</InputLabel>
-        <Select
-          value={formData.paymentMethod}
-          label="Payment Method"
-          name="paymentMethod"
-          onChange={handleChange}
-        >
-          <MenuItem value={"Credit Card"}>Credit Card</MenuItem>
-          <MenuItem value={"Debit Card"}>Debit Card</MenuItem>
-          <MenuItem value={"PayPal"}>PayPal</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        label="Section"
-        variant="outlined"
-        name="section"
-        value={formData.section}
-        onChange={handleChange}
-      />
       {formData.qualifications.map((qualification, index) => (
         <div key={`qualification-${index}`} style={{ maxWidth: "90%" }}>
           <FormControl sx={{ m: 1, minWidth: 430 }}>
@@ -365,7 +372,6 @@ const UserForm = () => {
           )}
         </div>
       ))}
-
       {formData.qualifications.length < 3 && (
         <Button
           variant="contained"
@@ -382,7 +388,7 @@ const UserForm = () => {
         onChange={handleImageChange}
         sx={{ mt: 2 }}
       />
-      <Button variant="contained" type="submit" sx={{ mt: 3 }}>
+      <Button variant="contained" type="submit" sx={{ mt: 3, backgroundColor: "#4caf50", color: "#fff" }}>
         Submit
       </Button>
     </Box>

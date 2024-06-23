@@ -95,7 +95,7 @@ const updateProfile = async (req, res, next) => {
   console.log(req.body, "METHOD");
   let imageUrl ;
   try{
-  const find = await User.findOne({ id: user.id });
+  const find = await User.findOne({where: {id: user.id} });
   
   if(req.file){
     imageUrl=req.file.path

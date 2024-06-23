@@ -11,15 +11,18 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Edit, Delete } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
+
 const currentUser = JSON.parse(localStorage.getItem("user")) || { id: 1 };
+
 const UserInfo = () => {
   const [user, setUser] = useState({
     addresses: [],
     qualifications: [],
   });
-  const { update, id } = useContext(UpdateContext);
-  console.log(id, "id");
+  // const { id } = useContext(UpdateContext);
+  const { id} = useContext(UpdateContext);
+
   useEffect(() => {
     if (id) {
       axios
@@ -27,7 +30,7 @@ const UserInfo = () => {
         .then((res) => {
           const data = res.data.data;
           const qualifications = data.qualification;
-          const section = data.section;  
+          const section = data.section;
           setUser({
             ...data.result,
             qualifications: qualifications,
@@ -38,19 +41,29 @@ const UserInfo = () => {
           console.log(e);
         });
     }
-  }, []);
+  }, [id]);
+
   const navigate = useNavigate();
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         marginTop: 3,
-        minWidth: "10000px",
+        width: "100%",
       }}
     >
-      {console.log(user)}
-      <Card sx={{ minWidth: 600, boxShadow: 4, borderRadius: 2, padding: 2 }}>
+      <Card
+        sx={{
+          minWidth: 600,
+          maxWidth: 800,
+          boxShadow: 4,
+          borderRadius: 2,
+          padding: 2,
+          backgroundColor: "#f9f9f9",
+        }}
+      >
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
             {user.name}
@@ -58,7 +71,7 @@ const UserInfo = () => {
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
             {user.email}
           </Typography>
-          <Divider sx={{ marginY: 1 }} />
+          <Divider sx={{ marginY: 2 }} />
           <Box sx={{ marginBottom: 2 }}>
             <Typography variant="body2" color="text.secondary">
               <strong>ID:</strong> {user.id}
@@ -66,19 +79,19 @@ const UserInfo = () => {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ marginTop: 1 }}
+              sx={{ marginTop: 2 }}
             >
               <strong>Addresses:</strong>
-              <Box component="ul" sx={{ paddingLeft: 2 }}>
-                {user.addresses.map((item) => {
-                  return <li>{item}</li>;
-                })}
+              <Box component="ul" sx={{ paddingLeft: 2, margin: 0 }}>
+                {user.addresses.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </Box>
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ marginTop: 1 }}
+              sx={{ marginTop: 2 }}
             >
               <strong>Payment Method:</strong>
               <p> {user && user.paymentMethods && user.paymentMethods[0]}</p>
@@ -86,20 +99,20 @@ const UserInfo = () => {
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ marginTop: 1 }}
+              sx={{ marginTop: 2 }}
             >
               <strong>Section:</strong> {user.section}
             </Typography>
             <Typography
               variant="body2"
               color="text.secondary"
-              sx={{ marginTop: 1 }}
+              sx={{ marginTop: 2 }}
             >
               <strong>Qualifications:</strong>
-              <Box component="ul" sx={{ paddingLeft: 2 }}>
-                {user.qualifications.map((item) => {
-                  return <li key={item}>{item}</li>;
-                })}
+              <Box component="ul" sx={{ paddingLeft: 2, margin: 0 }}>
+                {user.qualifications.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
               </Box>
             </Typography>
           </Box>
@@ -113,20 +126,12 @@ const UserInfo = () => {
                 height: 100,
                 borderRadius: "50%",
                 marginTop: 2,
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
               }}
             />
           )}
         </CardContent>
         <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button
-            startIcon={<Edit />}
-            variant="outlined"
-            color="primary"
-            sx={{ minWidth: "100%" }}
-            onClick={() => navigate("/updateProfile")}
-          >
-            Edit Profile
-          </Button>
         </CardActions>
       </Card>
     </Box>
@@ -134,3 +139,4 @@ const UserInfo = () => {
 };
 
 export default UserInfo;
+

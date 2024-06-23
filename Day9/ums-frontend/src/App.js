@@ -5,13 +5,15 @@ import { Box } from "@mui/material";
 import Home from "./pages/home";
 import Users from "./pages/users";
 import User from "./pages/profile/index";
-import { UpdateProvider, UpdateContext } from "./updateContext";
-import { createContext, useContext, useState } from "react";
+import { UpdateContext } from "./updateContext";
 import Sections from "./pages/section";
 import ViewSection from "./pages/section/ViewSection";
+import { useContext } from "react";
+
 function App() {
   const navigate = useNavigate();
   const { update, setUpdate, setId } = useContext(UpdateContext);
+
   return (
     <div className="App">
       <h2>User Management Systems</h2>
@@ -19,11 +21,12 @@ function App() {
         <Button
           variant="contained"
           onClick={() => {
-            setId(null);
-            navigate("/home");
+            navigate("/");
+            setUpdate(false);
+            localStorage.clear();
           }}
         >
-          Add User
+          HOME
         </Button>
         <Button
           variant="outlined"
@@ -31,20 +34,19 @@ function App() {
             navigate("/all-users");
             localStorage.clear();
           }}
-          style={{ marginLeft: "5pt" }}
+          style={{ marginLeft: "10px" }}
         >
           View Users
         </Button>
         <Button
           variant="outlined"
           onClick={() => {
-            navigate("/");
-            setUpdate(false);
-            localStorage.clear();
+            setId(null);
+            navigate("/home");
           }}
-          style={{ marginLeft: "5pt" }}
+          style={{ marginLeft: "10px" }}
         >
-          HOME
+          Add User
         </Button>
         <Button
           variant="outlined"
@@ -52,7 +54,7 @@ function App() {
             navigate("/all-sections");
             setUpdate(false);
           }}
-          style={{ marginLeft: "5pt" }}
+          style={{ marginLeft: "10px" }}
         >
           SECTIONS
         </Button>
