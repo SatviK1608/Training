@@ -71,14 +71,6 @@ export default function Sections() {
             >
               VIEW SECTION
             </Button>
-            <Button
-              startIcon={<Edit />}
-              variant="outlined"
-              sx={{ color: "#616161", borderColor: "#bdbdbd" }}
-              onClick={() => {}}
-            >
-              EDIT
-            </Button>
           </CardActions>
         </Card>
       ))}

@@ -9,6 +9,7 @@ import { UpdateContext } from "./updateContext";
 import Sections from "./pages/section";
 import ViewSection from "./pages/section/ViewSection";
 import { useContext } from "react";
+import Welcome from "./pages/welcome";
 
 function App() {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ function App() {
         </Button>
       </Box>
       <Routes>
+        <Route path="/" element={<Welcome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/all-users" element={<Users />} />
         <Route path="/user/:id" element={<User />} />
