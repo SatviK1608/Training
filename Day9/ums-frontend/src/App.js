@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <h2>User Management Systems</h2>
+      <h2>User Management System</h2>
       <Box>
         <Button
           variant="contained"
