@@ -11,7 +11,10 @@ app.use(cors());
 db.sequelize.sync();
 
 app.post('/products', async (req, res) => {
-  const { sort, category, availability, color, brand } = req.body;
+  const { sort, category, availability, color, brand, page = 1 } = req.body;
+
+  const limit = 5;
+  const offset = (page - 1) * limit;
 
   let whereClause = {};
   if (category) {
@@ -35,11 +38,17 @@ app.post('/products', async (req, res) => {
   }
 
   try {
-    const products = await db.products.findAll({
+    const { count, rows } = await db.products.findAndCountAll({
       where: whereClause,
       order: orderClause,
+      limit,
+      offset,
     });
-    res.json({ products });
+
+    res.json({
+      products: rows,
+      totalPages: Math.ceil(count / limit),
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
