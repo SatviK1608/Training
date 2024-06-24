@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FilterForm from './FilterForm';
 import ProductList from './ProductList';
 import { Container, Typography, Pagination } from '@mui/material';
@@ -41,12 +41,17 @@ const App = () => {
     fetchProducts(filters, value);
   };
 
+  const handleClearFilters = (clearedFilters) => {
+    setFilters(clearedFilters);
+    fetchProducts(clearedFilters, 1);
+  };
+
   return (
     <Container>
       <Typography variant="h4" component="h1" gutterBottom>
         Product Filter
       </Typography>
-      <FilterForm onFilterSubmit={handleFilterSubmit} />
+      <FilterForm onFilterSubmit={handleFilterSubmit} onClearFilters={handleClearFilters} />
       <ProductList products={products} />
       <Pagination
         count={totalPages}

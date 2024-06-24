@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, MenuItem, Select, TextField, InputLabel, FormControl } from '@mui/material';
 
-const FilterForm = ({ onFilterSubmit }) => {
+const FilterForm = ({ onFilterSubmit, onClearFilters }) => {
   const [filters, setFilters] = useState({
     sort: 'low-to-high',
     category: '',
@@ -23,6 +23,18 @@ const FilterForm = ({ onFilterSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onFilterSubmit(filters);
+  };
+
+  const handleClearFilters = () => {
+    const clearedFilters = {
+      sort: 'low-to-high',
+      category: '',
+      availability: 'available',
+      color: '',
+      brand: '',
+    };
+    setFilters(clearedFilters);
+    onClearFilters(clearedFilters);
   };
 
   return (
@@ -70,6 +82,7 @@ const FilterForm = ({ onFilterSubmit }) => {
         </Select>
       </FormControl>
       <Button type="submit" variant="contained" color="primary">Submit</Button>
+      <Button variant="outlined" color="secondary" onClick={handleClearFilters}>Clear Filters</Button>
     </Box>
   );
 };
