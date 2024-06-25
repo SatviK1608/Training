@@ -11,7 +11,7 @@ const FilterForm = ({ onFilterSubmit, onClearFilters }) => {
   });
 
   const categories = ['Electronics', 'Books', 'Clothing', 'Toys', 'Furniture'];
-  const brands = ['Brand A', 'Brand B', 'Brand C', 'Brand D', 'Brand E', 'Brand F', 'Brand G', 'Brand H', 'Brand I', 'Brand J'];
+  const brands = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
 
   const handleChange = (e) => {
     setFilters({

@@ -13,7 +13,7 @@ db.sequelize.sync();
 app.post('/products', async (req, res) => {
   const { sort, category, availability, color, brand, page = 1 } = req.body;
 
-  const limit = 5;
+  const limit = 6;
   const offset = (page - 1) * limit;
 
   let whereClause = {};
