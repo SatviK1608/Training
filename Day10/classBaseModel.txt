@@ -1,0 +1,45 @@
+class User extends Model {
+  static async findByEmail(email) {
+    return await User.findOne({ where: { email } });
+  }
+}
+
+User.init({
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  password: DataTypes.STRING
+}, { sequelize, modelName: 'User' });
+
+class Profile extends Model {}
+
+Profile.init({
+  bio: DataTypes.STRING,
+  userId: DataTypes.INTEGER
+}, { sequelize, modelName: 'Profile' });
+Set Up Associations:
+Define associations using static methods inside the model class.
+
+User.associate = function(models) {
+  User.hasOne(models.Profile, {
+    foreignKey: 'userId',
+    as: 'profile'
+  });
+};
+
+Profile.associate = function(models) {
+  Profile.belongsTo(models.User, {
+    foreignKey: 'userId',
+    as: 'user'
+  });
+};
+sequelize.sync({ force: true }).then(async () => {
+  console.log("Database & tables created!");
+
+  // Example usage of the static method
+  const user = await User.create({ name: 'John Doe', email: 'john@example.com', password: '123456' });
+  const profile = await Profile.create({ bio: 'Hello, I am John!', userId: user.id });
+
+  // Using the static method
+  const foundUser = await User.findByEmail('john@example.com');
+  console.log(foundUser);
+});
