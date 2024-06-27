@@ -1,0 +1,68 @@
+
+                            ----------Normalization----------------
+
+
+Functional Dependancy : Determinant -> Dependant
+It's a rltn b/w p/k attribute of the relation to that of the other attribute of the rltn
+
+WhY Normalization : To avoid redundancy in db
+
+We do decomposition of table to achieve mormalization
+
+1NF : Every Realtion cell must have atomic values and must not have multi-values attributes
+
+
+2NF : Must be in 1NF and there should not be any partial dependancy(all non prime attributes must be fully dependent on pk and non prime attribute cannot depend on the part of thr pk)
+
+
+3NF : Must be in 2NF and there should not be any transitive dependancy(non prime attr should not find non prime attributes)
+
+
+BCNF : Must be in 3NF and for A->B,A must be a super key (we must not derive prime attr from any prime or non-prime attr)
+
+
+
+
+
+
+
+                            ------Transaction-------
+
+Sequence is very imp and the result of all these statements in a 
+transaction either gets completed successfully or if at any point 
+any failure happends it gets rollbacked.
+
+
+ACID properites : ensure integrity of data
+
+
+Atomicity : Either all o/p of transactions are reflected properly in DB, or none are.
+
+
+Consistency : If a transaction is successful, then the DB must be in a consistent state.Integrity constraints must be maintained before and after transaction.
+
+
+Isolation : Even though multiple transactions may execute concurrently, the system guarantees that, for every pair of transactions Ti and Tj, it appears to Ti that either Tj finished execution before Ti started,
+or Tj started execution after Ti finished.Thus, each transaction is unaware of other transactions executing concurrently in the system.
+Multiple transactions can happen in the system in isolation, without interfering each other.
+
+
+Durability : After transaction completes successfully, the changes it has made to the database persist, even if there are system failures.
+
+
+Transaction states : Active state, Partially commited state, Failed state, Aborted State, Commited state, Terminate State
+
+
+
+
+
+
+
+
+
+                            --------Indexing---------
+
+Indexing is a technique to improve the performance of queries.
+Indexes are used to speed up the retrieval of data from the database.
+In this technique we maintain an index table comprised of search key(contains copy of pk or ck) and base pointer(pointer holding the address of disk block where the value of the corresponding key is stored ).
+Now searching is done on this index table
