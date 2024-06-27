@@ -1,0 +1,44 @@
+[
+  {
+    "id": "12345",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "addresses": [
+      {
+        "value": "123 Main St, Springfield, IL"
+      },
+      {
+        "value": "456 Elm St, Springfield, IL"
+      }
+    ],
+    "paymentMethod": "Credit Card",
+    "section": "A1",
+    "qualifications": [
+      {
+        "value": "Bachelor's in Computer Science"
+      },
+      {
+        "value": "Certified Java Developer"
+      }
+    ],
+    "profileImage": "john_doe_profile.jpg"
+  },
+  {
+    "id": "67890",
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "addresses": [
+      {
+        "value": "789 Maple St, Springfield, IL"
+      }
+    ],
+    "paymentMethod": "PayPal",
+    "section": "B2",
+    "qualifications": [
+      {
+        "value": "Master's in Business Administration"
+      }
+    ],
+    "profileImage": "jane_smith_profile.jpg"
+  }
+]
