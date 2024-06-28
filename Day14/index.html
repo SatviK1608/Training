@@ -1,0 +1,42 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Records</title>
+</head>
+<body>
+  <h1>Search Records</h1>
+  <form id="searchForm">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" required>
+    <button type="submit">Search</button>
+  </form>
+  <div id="results"></div>
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+        const result={firstName,lastName}
+      const response = await fetch(`http://localhost:3000/search`,{
+        body:JSON.stringify(result),
+        method:'POST',
+        headers: {'Content-Type': 'application/json'},
+      });
+      const records = await response.json();
+
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      records.forEach(record => {
+        const recordDiv = document.createElement('div');
+        recordDiv.textContent = `First Name: ${record.firstName}, Last Name: ${record.lastName}`;
+        resultsDiv.appendChild(recordDiv);
+      });
+    });
+  </script>
+</body>
+</html>
