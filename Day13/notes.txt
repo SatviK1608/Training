@@ -1,5 +1,5 @@
 
-                            ----------Normalization----------------
+                                                                        ----------Normalization----------------
 
 
 Functional Dependancy : Determinant -> Dependant
@@ -26,7 +26,7 @@ BCNF : Must be in 3NF and for A->B,A must be a super key (we must not derive pri
 
 
 
-                            ------Transaction-------
+                                                                            ------Transaction-------
 
 Sequence is very imp and the result of all these statements in a 
 transaction either gets completed successfully or if at any point 
@@ -60,9 +60,75 @@ Transaction states : Active state, Partially commited state, Failed state, Abort
 
 
 
-                            --------Indexing---------
+                                                                            --------Indexing---------
 
 Indexing is a technique to improve the performance of queries.
 Indexes are used to speed up the retrieval of data from the database.
 In this technique we maintain an index table comprised of search key(contains copy of pk or ck) and base pointer(pointer holding the address of disk block where the value of the corresponding key is stored ).
 Now searching is done on this index table
+
+
+
+
+
+
+                                                             ------------------Reads and Writes--------------------
+
+1. Dirty Read
+A dirty read occurs when a transaction reads data that has been written by another transaction that is not yet committed. 
+This can lead to inconsistencies because the uncommitted data might be rolled back, meaning that the data read could be invalid.
+
+Example:
+
+Transaction A updates a record.
+Transaction B reads the updated record before Transaction A commits.
+If Transaction A rolls back, the data read by Transaction B is now invalid (or "dirty").
+
+
+2. Blind Write
+A blind write happens when a transaction writes data without reading the current value of the data it is modifying. 
+This can lead to lost updates if multiple transactions are updating the same data concurrently.
+
+Example:
+
+Transaction A and Transaction B both intend to update the same record.
+Transaction A updates the record without reading its current value.
+Transaction B also updates the record without reading its current value.
+The update from one of the transactions might be lost because neither transaction was aware of the other's changes.
+
+
+
+3. Phantom Read
+A phantom read occurs when a transaction reads a set of rows that match a certain condition, 
+and then another transaction inserts or deletes rows that would alter the result set of the initial read if it were re-executed. 
+This means that the same query in the same transaction can return different results at different times.
+
+Example:
+
+Transaction A reads rows from a table with a certain condition (e.g., "SELECT * FROM users WHERE age > 30").
+Transaction B inserts a new row that matches the condition (e.g., inserts a user with age 35).
+If Transaction A re-executes the query, it will see a different set of rows because of the new row inserted by Transaction B.
+
+
+
+
+
+                                                            ----------------ISOLATION LEVELS---------------
+
+READ_COMMITED : Lets say transaction t1 read a,b,c and after that some transaction t2 comes in and inserts the data, d. The next read of t1 will include the inserted row i.e a,b,c,d
+And if t2 comes and deletes the data, d than in next read of t1 we will not see the deleted row i.e a,b,c.
+Allows phantom read and blind write but not dirty read
+
+REPEATABLE_READ : Lets say transaction t1 read a,b,c and after that some transaction t2 comes in and inserts the data, d. The next read of t1 will include the inserted row i.e a,b,c,d
+And if t2 comes and deletes the data, d than in next read of t1 we will  see the deleted row i.e a,b,c,d. bcz it locks the rows once added i.e holds the transaction until its completition
+But this is not recommended coz it can cause deadlock (due to intent shared and exclusive rows)
+Allows phantom read but not dirty read and blind write
+
+
+READ_UNCOMMITED : Allows dirty read, Phantom Read and blind write
+
+
+SERIALIZABLE : Lets say transaction t1 read a,b,c and after that some transaction t2 comes in and inserts the data, d. The next read of t1 will NOT include the inserted row i.e a,b,c
+And if t2 comes and deletes the data, d than in next read of t1 we will se prev rows only i.e a,b,c. 
+This blocks the execution of t2 and doesnt even allow to insert before t1 is completed
+Does allow phantom and dirty read and doesnt allow blind write
