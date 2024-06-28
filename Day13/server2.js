@@ -6,8 +6,8 @@ const Account = require('./models/Account')(sequelize, DataTypes);
   await sequelize.sync({ force: true });
   const account = await Account.create({ balance: 1000 });
 
-  const transactionA = await sequelize.transaction();
-  // const transactionA = await sequelize.transaction({isolationLevel : Transaction.ISOLATION_LEVELS.SERIALIZABLE});
+  //const transactionA = await sequelize.transaction();
+  const transactionA = await sequelize.transaction({isolationLevel : Transaction.ISOLATION_LEVELS.SERIALIZABLE});
 
 
   try {
@@ -18,10 +18,10 @@ const Account = require('./models/Account')(sequelize, DataTypes);
     console.log('Transaction A - Balance after deduction:', accountA.balance); 
 
     setTimeout(async () => {
-      const transactionB = await sequelize.transaction();
-      // const transactionB = await sequelize.transaction({
-      //   isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE
-      // },);
+      //const transactionB = await sequelize.transaction();
+      const transactionB = await sequelize.transaction({
+        isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE
+      },);
 
       try {
         const accountB = await Account.findByPk(account.id, { transaction: transactionB });
