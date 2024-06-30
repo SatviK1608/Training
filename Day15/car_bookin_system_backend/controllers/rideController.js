@@ -20,6 +20,10 @@ const getRides = async (req, res) => {
   }
 };
 
+const yourRides=async(req,res)=>{
+  
+}
+
 const updateRide = async (req, res) => {
   const { id } = req.params;
   const { car_name, capacity, source, destination, fair } = req.body;
