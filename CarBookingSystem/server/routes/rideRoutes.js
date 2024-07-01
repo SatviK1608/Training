@@ -11,5 +11,5 @@ router.put('/updateRide', updateRide);
 router.delete('/deleteRide', deleteRide);
 router.post('/book', bookRide);
 router.delete('/cancelRide',cancelRide)
-router.get('/yourCar',yourCar)
+router.get('/yourCar/:user_id',yourCar)
 module.exports = router;

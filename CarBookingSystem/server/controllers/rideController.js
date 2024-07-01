@@ -86,9 +86,12 @@ const yourRide=async(req,res)=>{
 }
 
 const yourCar=async (req,res)=>{
-  const {ride_id,user_id}=req.body;
+  const {user_id}=req.params;
   try{
-  const ride=await Ride.findOne({where:{ride_id,owner_user_id:user_id}})
+  const ride=await Ride.findOne({where:{owner_user_id:user_id}})
+  if(ride==null){
+    res.json({message:"No car found"})
+  }
   res.json(ride);
   }catch(error){
     res.status(500).json({ error: error.message });
