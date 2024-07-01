@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded())
 
 app.use('/api/users', userRoutes);
-app.use('/api/rides'/*,authenticateToken*/, rideRoutes);
+app.use('/api/rides',authenticateToken, rideRoutes);
 
 sequelize.sync().then(() => {
   app.listen(process.env.PORT || 5000, () => {
