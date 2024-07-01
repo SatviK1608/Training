@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRide, getRides, updateRide, deleteRide,bookRide ,yourRide,cancelRide} = require('../controllers/rideController');
+const { createRide, getRides, updateRide, deleteRide,bookRide ,yourRide,cancelRide,yourCar} = require('../controllers/rideController');
 const router = express.Router();
 // const { authenticateUser } = require('../middleware/authMiddleware');
 
@@ -11,4 +11,5 @@ router.put('/updateRide', updateRide);
 router.delete('/deleteRide', deleteRide);
 router.post('/book', bookRide);
 router.delete('/cancelRide',cancelRide)
+router.get('/yourCar',yourCar)
 module.exports = router;

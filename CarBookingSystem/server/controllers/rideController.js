@@ -85,6 +85,16 @@ const yourRide=async(req,res)=>{
     }
 }
 
+const yourCar=async (req,res)=>{
+  const {ride_id,user_id}=req.body;
+  try{
+  const ride=await Ride.findOne({where:{ride_id,owner_user_id:user_id}})
+  res.json(ride);
+  }catch(error){
+    res.status(500).json({ error: error.message });
+  }
+}
+
 const cancelRide=async (req,res)=>{
     const {ride_id,user_id}=req.body;
     try{
@@ -100,4 +110,4 @@ const cancelRide=async (req,res)=>{
     }
 }
 
-module.exports={createRide,getRides,updateRide,deleteRide,bookRide,yourRide,cancelRide}
+module.exports={createRide,getRides,updateRide,deleteRide,bookRide,yourRide,cancelRide,yourCar}

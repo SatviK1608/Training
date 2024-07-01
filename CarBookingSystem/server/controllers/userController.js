@@ -62,6 +62,7 @@ const getUsers=async(req,res)=>{
     }
 }
 const logOut=async(req,res)=>{
+  //destroy token and userid from localstorage
   res.status(200).send("User logged out successfully");
 }
 module.exports={loginUser,signupUser,getUserDetails,updateUser,getUsers,logOut}
